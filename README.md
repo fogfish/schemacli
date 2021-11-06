@@ -6,7 +6,7 @@ The command-line utility to parse https://schema.org ontology.
 
 1. download JSON-LD [schema.org ontology](https://github.com/schemaorg/schemaorg/tree/main/data/releases), take latest release of `schemaorg-all-http.jsonld`
 
-2. Install the cli `go get github.com/fogfish/schemacli`
+2. Install the cli `go install github.com/fogfish/schemacli@latest`
 
 ## License
 
