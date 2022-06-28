@@ -73,15 +73,15 @@ func coretype(cmd *cobra.Command, args []string) error {
 					)
 				case "schema:Date":
 					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
-						declareTypeForProperty(&spec, "Date"),
+						declareTypeForProperty(&spec, "string"),
 					)
 				case "schema:Time":
 					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
-						declareTypeForProperty(&spec, "Time"),
+						declareTypeForProperty(&spec, "string"),
 					)
 				case "schema:DateTime":
 					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
-						declareTypeForProperty(&spec, "DateTime"),
+						declareTypeForProperty(&spec, "string"),
 					)
 				default:
 					fmt.Fprintf(os.Stderr, "WARNING: Unable to process %s, type %s is not supported.\n", spec.ID, v.ID)
