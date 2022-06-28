@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go/ast"
 	"go/token"
+	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -57,12 +58,33 @@ func coretype(cmd *cobra.Command, args []string) error {
 	for _, spec := range schema.Graph {
 		if isA(&spec, "rdf:Property") {
 			if v := isRangeOf(keyval, &spec, "schema:DataType"); v != nil {
-				//
-				// Note: only schema:Text is supported
-				if v.ID == "schema:Text" {
+				switch v.ID {
+				case "schema:Text":
 					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
 						declareTypeForProperty(&spec, "string"),
 					)
+				case "schema:Number":
+					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
+						declareTypeForProperty(&spec, "float64"),
+					)
+				case "schema:Boolean":
+					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
+						declareTypeForProperty(&spec, "bool"),
+					)
+				case "schema:Date":
+					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
+						declareTypeForProperty(&spec, "Date"),
+					)
+				case "schema:Time":
+					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
+						declareTypeForProperty(&spec, "Time"),
+					)
+				case "schema:DateTime":
+					coreTypeSpec.Decls = append(coreTypeSpec.Decls,
+						declareTypeForProperty(&spec, "DateTime"),
+					)
+				default:
+					fmt.Fprintf(os.Stderr, "WARNING: Unable to process %s, type %s is not supported.\n", spec.ID, v.ID)
 				}
 			}
 		}
